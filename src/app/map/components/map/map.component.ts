@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, OnChanges, SimpleChanges, AfterViewInit, EventEmitter } from '@angular/core';
 import * as L from 'leaflet';
 import { Place } from '../../../core/models/place';
+import { RestaurantService } from '../../../core/services/restaurant.service';
 
 @Component({
   selector: 'app-map',
@@ -10,10 +11,12 @@ import { Place } from '../../../core/models/place';
 })
 export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
 
+  constructor(private restaurantService: RestaurantService) {}
+
   @Input() restaurants: Place[] = [];
   @Input() receivedObject: any;
 
-  @Output() restaurantSelected = new EventEmitter<string>();
+  //@Output() restaurantSelected = new EventEmitter<string>();
 
 
 
@@ -125,7 +128,8 @@ export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
           const button = document.getElementById('popup-button');
           if (button) {
             button.addEventListener('click', () => {
-              this.restaurantSelected.emit(restaurant.display_name); // Émettre le restaurant sélectionné
+              //this.restaurantSelected.emit(restaurant.display_name); // Émettre le restaurant sélectionné
+              this.restaurantService.sendRestaurantDetails(restaurant.display_name);
             });
           }
         }); 

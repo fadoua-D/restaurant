@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 // import { SearchModule } from './search/search.module';  // Import du module Search
 //import { FooterComponent } from './core/components/footer/footer.component';
 import { ApiService } from './core/services/api.service';
+import { RestaurantService } from './core/services/restaurant.service';
+
 //import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
 import { AppRoutingModule } from './app-routing.module';  // Import du module de routing
@@ -25,7 +27,7 @@ import { AppRoutingModule } from './app-routing.module';  // Import du module de
     AppRoutingModule,
     //CoreModule
   ],
-  providers: [ ApiService ],
+  providers: [ ApiService, RestaurantService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

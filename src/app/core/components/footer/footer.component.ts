@@ -2,6 +2,8 @@ import { Component , Input, OnInit, OnChanges, SimpleChanges} from '@angular/cor
 //import { NgIf } from '@angular/common';
 //import { RouterLink, RouterLinkActive } from '@angular/router';
 
+import { RestaurantService } from '../../../core/services/restaurant.service';
+
 @Component({
   selector: 'app-footer',
   standalone: false,
@@ -9,9 +11,17 @@ import { Component , Input, OnInit, OnChanges, SimpleChanges} from '@angular/cor
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent implements OnInit, OnChanges{
-  @Input() restaurantDetails: any = ''; // Ville reçue du parent
+  constructor(private restaurantService: RestaurantService) {}
+
+  //@Input() restaurantDetails: any = ''; // Ville reçue du parent
+
+  restaurantDetails: any;
 
   ngOnInit(): void {
+    // Souscrire aux détails du restaurant
+    this.restaurantService.selectedRestaurant$.subscribe((details) => {
+      this.restaurantDetails = details;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
