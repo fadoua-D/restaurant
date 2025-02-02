@@ -1,0 +1,3 @@
+<app-map (restaurantSelected)="onRestaurantSelected($event)" [restaurants]="restaurants" [receivedObject]="sharedObject"></app-map>
+<app-search (restaurantsEmit)="updateRestaurants($event)" (cityInfoEmitted)="receiveObject($event)"></app-search>
+<app-footer [restaurantDetails]="selectedRestaurant"></app-footer>
