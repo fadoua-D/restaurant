@@ -78,7 +78,7 @@ export class SearchComponent implements OnInit {
           lon: parseFloat(data[0].lon)
         };
 
-        console.log("Envoi des infos de la ville :", cityInfo);
+        //console.log("Envoi des infos de la ville :", cityInfo);
 
         this.cityInfoEmitted.emit(cityInfo); // Émettre l'objet avec les détails sur la ville à l'appComponent
       }
