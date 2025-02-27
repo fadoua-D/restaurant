@@ -1,6 +1,6 @@
 import { Component, OnInit,ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef} from '@angular/core';
 import {  FormControl, Validators} from '@angular/forms'
-import { Observable } from 'rxjs';
+//import { Observable } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
 import { Place } from '../../../core/models/place';
 import { debounceTime } from 'rxjs/operators';
@@ -39,12 +39,12 @@ export class SearchComponent implements OnInit {
     this.city.valueChanges
       .pipe(debounceTime(500))
       .subscribe((value) => {
-        this.fetchData(value);
+        this.recupererVille(value);
       });
 
   }
 
-  fetchData(query: string): void {
+  recupererVille(query: string): void {
     this.apiService.getCitiesByName(this.city.getRawValue())
     .subscribe((result) => {
       this.cities = result;
