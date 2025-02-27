@@ -5,7 +5,8 @@
         </div>
 
         <div class="input-group rounded">
-            <input type="text" (keyup)="recupererVille($event)" [formControl]="city" id="city" name="city" class="form-control rounded" placeholder="Entrez le nom de la ville" />
+            <!-- <input type="text" (keyup)="recupererVille($event)" [formControl]="city" id="city" name="city" class="form-control rounded" placeholder="Entrez le nom de la ville" /> -->
+            <input type="text"  [formControl]="city" id="city" name="city" class="form-control rounded" placeholder="Entrez le nom de la ville" />
             <button  (click)="restaurantList($event)"   class="input-group-text border-0">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>

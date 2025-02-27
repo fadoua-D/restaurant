@@ -3,6 +3,7 @@ import {  FormControl, Validators} from '@angular/forms'
 import { Observable } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
 import { Place } from '../../../core/models/place';
+import { debounceTime } from 'rxjs/operators';
 
 
 
@@ -35,17 +36,29 @@ export class SearchComponent implements OnInit {
  
 
   ngOnInit(): void {
+    this.city.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((value) => {
+        this.fetchData(value);
+      });
 
   }
 
-  recupererVille(e:KeyboardEvent){
-    e.preventDefault();
-    //this.cities$ = this.apiService.getCitiesByName(this.city.getRawValue());
+  fetchData(query: string): void {
     this.apiService.getCitiesByName(this.city.getRawValue())
     .subscribe((result) => {
       this.cities = result;
     }) 
   }
+
+  // recupererVille(e:KeyboardEvent){
+  //   e.preventDefault();
+  //   //this.cities$ = this.apiService.getCitiesByName(this.city.getRawValue());
+  //   this.apiService.getCitiesByName(this.city.getRawValue())
+  //   .subscribe((result) => {
+  //     this.cities = result;
+  //   }) 
+  // }
 
   onSelected(value:string): void {
 		this.cityAdress = value;
