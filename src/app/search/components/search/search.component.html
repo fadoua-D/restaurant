@@ -14,11 +14,16 @@
             <div class="error">Renseigner la ville</div>
         }
     </form>
-    
-    <div class="listVille" *ngIf="cities$ | async"  #cityAdress >
-        <div class="listElement"  *ngFor="let ville of cities$ | async"  (click)="onSelected(ville.display_name)" ><a href="#">{{ ville.display_name }}</a>
+
+    <div class="listVille" *ngIf="cities"  #cityAdress >
+        <div class="listElement"  *ngFor="let ville of cities"  (click)="onSelected(ville.display_name)" ><a href="#">{{ ville.display_name }}</a>
         </div>
     </div>
+    
+    <!-- <div class="listVille" *ngIf="cities$ | async"  #cityAdress >
+        <div class="listElement"  *ngFor="let ville of cities$ | async"  (click)="onSelected(ville.display_name)" ><a href="#">{{ ville.display_name }}</a>
+        </div>
+    </div> -->
 
     <!-- <ul class="dropdown-menu" *ngIf="cities$ | async"  #cityAdress >
         <li *ngFor="let ville of cities$ | async"  (click)="onSelected(ville.display_name)" ><a class="dropdown-item" href="#">{{ ville.display_name }}</a></li>
