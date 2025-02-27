@@ -18,6 +18,7 @@ import { SearchModule } from '../search/search.module';  // Import du module Sea
   imports: [
     CommonModule,
     RouterModule,
+    //RouterModule.forChild([{ path: '', component: HomeComponent }]),
     MapModule, 
     SearchModule,
     CoreModule

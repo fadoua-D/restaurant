@@ -11,7 +11,6 @@ export class ApiService {
 
     baseUrl: string = 'https://nominatim.openstreetmap.org/search';
     
-    
     constructor(private httpClient : HttpClient) {}
     
     // Fonction permettant de récupérer les villes à partir du nom passer en paramètre
@@ -19,7 +18,6 @@ export class ApiService {
       const params = new HttpParams()
         .set('q', `${cityName}`)
         .set('format', 'jsonv2')
-        .set('countrycodes', 'FR') // limiter la recherche en France 
 
       return this.httpClient.get<Place[]>(this.baseUrl, { params });
     }
@@ -33,9 +31,6 @@ export class ApiService {
         .set('addressdetails', '1');
     
       //console.log('Params:', params.toString());
-      const url = `${this.baseUrl}?${params.toString()}`;
-      console.log('URL generated:', url);  //  Affiche l'URL pour la comparer au test
-
     
       return this.httpClient
         .get<Place[]>(this.baseUrl, { params })

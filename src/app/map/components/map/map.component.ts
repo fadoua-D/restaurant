@@ -69,15 +69,11 @@ export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
   }
 
   updateMap(cityName: string): void {
-    const lat = this.receivedObject?.lat;
-    const lon = this.receivedObject?.lon;
-  
-    if (lat && lon) {
-      // Recentrer la carte sur la nouvelle ville
-      this.map.setView([lat, lon], 13);
-    } else {
-      console.warn('Coordinates not available in receivedObject');
-    }
+        let lat = this.receivedObject.lat;
+        let lon = this.receivedObject.lon;
+
+        // Recentrer la carte sur la nouvelle ville
+        this.map.setView([lat, lon], 13); // Centrer la carte avec un zoom de 13
   }
 
   private updateMapWithMarkers(): void {
@@ -105,14 +101,14 @@ export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
         .bindPopup(`
           <div>
             <p>${restaurant.display_name}</p>
-            <button class="btn btn-choice">
+            <button id="popup-button" class="btn btn-choice">
               Choisir
             </button>
           </div>
         `)
          // Écouter les interactions du bouton dans le popup
-        .on('popupopen', (e) => {
-          const button = e.target.getPopup().getElement().querySelector('.btn-choice');
+        .on('popupopen', () => {
+          const button = document.getElementById('popup-button');
           if (button) {
             button.addEventListener('click', () => {
               //this.restaurantSelected.emit(restaurant.display_name); // Émettre le restaurant sélectionné

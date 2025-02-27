@@ -21,8 +21,7 @@ export class SearchComponent implements OnInit {
 
   public city: FormControl = new FormControl('', [Validators.required]);
   public cityAdress: string = '';
-  // cities$! : Observable<Place[]> ;
-  public cities : Place[] = [];
+  cities$! : Observable<Place[]> ;
   @ViewChild('cityAdress') elRef!:ElementRef;
 
   @Output() restaurantsEmit = new EventEmitter<any[]>(); // Émetteur pour transmettre les restaurants
@@ -40,10 +39,7 @@ export class SearchComponent implements OnInit {
 
   recupererVille(e:KeyboardEvent){
     e.preventDefault();
-    this.apiService.getCitiesByName(this.city.getRawValue())
-    .subscribe((result) => {
-      this.cities = result;
-    }) 
+    this.cities$ = this.apiService.getCitiesByName(this.city.getRawValue());
   }
 
   onSelected(value:string): void {
