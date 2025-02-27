@@ -1,4 +1,7 @@
 import { Component , Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+//import { NgIf } from '@angular/common';
+//import { RouterLink, RouterLinkActive } from '@angular/router';
+
 import { RestaurantService } from '../../../core/services/restaurant.service';
 
 @Component({

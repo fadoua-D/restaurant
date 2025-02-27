@@ -1,9 +1,11 @@
 import { Component, OnInit,ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef} from '@angular/core';
-import {  FormControl, Validators} from '@angular/forms'
+//import { FormsModule, NgForm } from '@angular/forms';
+import {  FormControl} from '@angular/forms'
 import { Observable } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
+//import { AsyncPipe, NgFor, NgIf} from '@angular/common';
 import { Place } from '../../../core/models/place';
-
+//import { map, switchMap} from 'rxjs/operators';
 
 
 @Component({
@@ -19,7 +21,8 @@ export class SearchComponent implements OnInit {
   constructor(private apiService: ApiService) {
   }
 
-  public city: FormControl = new FormControl('', [Validators.required]);
+  //public city: FormControl = new FormControl('', [Validators.required]);
+  public city: FormControl = new FormControl('');
   public cityAdress: string = '';
   cities$! : Observable<Place[]> ;
   @ViewChild('cityAdress') elRef!:ElementRef;

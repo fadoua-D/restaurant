@@ -76,6 +76,23 @@ export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
         this.map.setView([lat, lon], 13); // Centrer la carte avec un zoom de 13
   }
 
+
+  // Méthode pour ajouter un marqueur
+  // addMarker(lat: number, lng: number, popupText: string): void {
+  //   const marker = L.marker([lat, lng], {
+  //     icon: L.icon({
+  //       iconSize: [25, 41],
+  //       iconAnchor: [13, 41],
+  //       iconUrl: './assets/marker-icon.png',
+  //       shadowUrl: './assets/marker-shadow.png',
+  //     }),
+  //   }).addTo(this.map)
+  //   .bindPopup(popupText)
+  //   .openPopup();
+
+  //   this.markers.push(marker);
+  // }
+
   private updateMapWithMarkers(): void {
     if (!this.map) return;
 
