@@ -9,23 +9,20 @@ import { tap} from 'rxjs/operators';
 })
 export class ApiService {
 
-
-    urlAPI:string = `https://nominatim.openstreetmap.org/search?format=jsonv2&q=`;
-    //urlREs:string = `https://nominatim.openstreetmap.org/search?format=jsonv2&type=restaurant&q=restaurant`;
-    urlREs = `https://nominatim.openstreetmap.org/search?format=jsonv2&type=restaurant&addressdetails=1&q=restaurant`;
     baseUrl: string = 'https://nominatim.openstreetmap.org/search';
     
     constructor(private httpClient : HttpClient) {}
-
+    
+    // Fonction permettant de récupérer les villes à partir du nom passer en paramètre
     getCitiesByName(cityName: string): Observable<Place[]>{
-      return this.httpClient.get<Place[]>(this.urlAPI + cityName);
+      const params = new HttpParams()
+        .set('q', `${cityName}`)
+        .set('format', 'jsonv2')
+
+      return this.httpClient.get<Place[]>(this.baseUrl, { params });
     }
-     
-
-    // getAllRestaurants(cityName: string): Observable<Place[]>{
-    //   return this.httpClient.get<Place[]>(this.urlAPI + cityName)
-    // }
-
+    
+    // Fonction permettant de récupérer les restaurants McDoDonald's de la ville passer en param
     getAllRestaurants(cityName: string): Observable<Place[]> {
       const params = new HttpParams()
         .set('q', `McDonald's ${cityName}`)
@@ -33,7 +30,7 @@ export class ApiService {
         .set('limit', '10')
         .set('addressdetails', '1');
     
-      console.log('Params:', params.toString());
+      //console.log('Params:', params.toString());
     
       return this.httpClient
         .get<Place[]>(this.baseUrl, { params })
@@ -45,7 +42,8 @@ export class ApiService {
           })
         );
     }
-
+    
+    // Fonction permettant de récupérer les détails sur la ville (les coordonnées)
     getCityCoordinates(cityName: string) {
       const params = new HttpParams()
         .set('q', cityName)
