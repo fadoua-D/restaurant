@@ -2,6 +2,10 @@ import { Component, OnInit, Input, Output, OnChanges, SimpleChanges, AfterViewIn
 import * as L from 'leaflet';
 import { Place } from '../../../core/models/place';
 import { RestaurantService } from '../../../core/services/restaurant.service';
+import { Store } from '@ngrx/store';
+//import { AppState } from './../../../store/app.state';
+//import * as RestaurantActions from './../../../store/restaurant/restaurant.actions';
+import { selectRestaurant } from './../../../store/restaurant/restaurant.actions';
 
 @Component({
   selector: 'app-map',
@@ -11,7 +15,7 @@ import { RestaurantService } from '../../../core/services/restaurant.service';
 })
 export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
 
-  constructor(private restaurantService: RestaurantService) {}
+  constructor(private restaurantService: RestaurantService, private store: Store) {}
 
   @Input() restaurants: Place[] = [];
   @Input() receivedObject: any;
@@ -112,7 +116,8 @@ export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
           if (button) {
             button.addEventListener('click', () => {
               //this.restaurantSelected.emit(restaurant.display_name); // Émettre le restaurant sélectionné
-              this.restaurantService.sendRestaurantDetails(restaurant.display_name);
+              //this.restaurantService.sendRestaurantDetails(restaurant.display_name);
+              this.chooseRestaurant(restaurant.display_name);
             });
           }
         }); 
@@ -125,5 +130,10 @@ export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
       this.map.remove(); // Supprime la carte proprement
     }
   }
-
+  chooseRestaurant(restaurantName: string) {
+    this.store.dispatch(selectRestaurant({ restaurant: restaurantName }));
+    console.log('**********************');
+    console.log('this.store', this.store);
+    console.log('**********************');
+  }
 }

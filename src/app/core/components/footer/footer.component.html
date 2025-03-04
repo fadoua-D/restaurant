@@ -1,5 +1,5 @@
 <footer class="fixed-bottom">
-    <div *ngIf="restaurantDetails ;else noSelection">
+    <!-- <div *ngIf="restaurantDetails ;else noSelection">
         <h3>Restaurant sélectionné :</h3>
         <p>{{ restaurantDetails }}</p>
         <button class="btn btn-choice">
@@ -9,6 +9,18 @@
 
     <ng-template #noSelection>
         <h3>Aucun restaurant séléctionné</h3>
-    </ng-template>
+    </ng-template> -->
+
+    <div *ngIf="(selectedRestaurant$ | async) !== null">
+        <h3>Restaurant sélectionné :</h3>
+        <p> {{ selectedRestaurant$ | async }}</p>
+        <button class="btn btn-choice">
+            Continuer
+        </button>
+    </div>
+    <div *ngIf="(selectedRestaurant$ | async) === null">
+        <h3>Aucun restaurant sélectionné.</h3>
+    </div>
+  
     
 </footer>

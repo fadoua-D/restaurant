@@ -1,6 +1,11 @@
 import { Component , Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import { RestaurantService } from '../../../core/services/restaurant.service';
 
+import { Store, select } from '@ngrx/store';
+import { AppState } from './../../../store/app.state';
+import { Observable } from 'rxjs';
+
+
 @Component({
   selector: 'app-footer',
   standalone: false,
@@ -8,7 +13,11 @@ import { RestaurantService } from '../../../core/services/restaurant.service';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent implements OnInit, OnChanges{
-  constructor(private restaurantService: RestaurantService) {}
+
+  selectedRestaurant$: Observable<string | null>;
+  constructor(private restaurantService: RestaurantService,  private store: Store<AppState>) {
+    this.selectedRestaurant$ = this.store.pipe(select(state => state.restaurant?.selectedRestaurant));
+  }
 
   //@Input() restaurantDetails: any = ''; // Ville reçue du parent
 
@@ -16,9 +25,9 @@ export class FooterComponent implements OnInit, OnChanges{
 
   ngOnInit(): void {
     // Souscrire aux détails du restaurant
-    this.restaurantService.selectedRestaurant$.subscribe((details) => {
-      this.restaurantDetails = details;
-    });
+    // this.restaurantService.selectedRestaurant$.subscribe((details) => {
+    //   this.restaurantDetails = details;
+    // });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
