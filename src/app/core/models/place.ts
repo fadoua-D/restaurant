@@ -8,7 +8,6 @@ export class Place {
                 public type: string,
                 public name: string,
                 public display_name: string,
-                //public boundingbox: []
                 ){}
 
 
