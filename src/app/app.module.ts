@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ApiService } from './core/services/api.service';
 import { RestaurantService } from './core/services/restaurant.service';
@@ -16,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';  // Import du module de
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     HomeModule,
     AppRoutingModule,
   ],
