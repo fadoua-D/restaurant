@@ -1,9 +1,11 @@
 import { Component, OnInit,ElementRef, ViewChild, EventEmitter, Output, ChangeDetectorRef} from '@angular/core';
 import {  FormControl, Validators} from '@angular/forms'
-//import { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
 import { Place } from '../../../core/models/place';
 import { debounceTime } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as CityActions from '../../../store/city/city.actions';
 
 
 
@@ -17,12 +19,15 @@ import { debounceTime } from 'rxjs/operators';
 
 export class SearchComponent implements OnInit {
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private store: Store<{ city: { cities: Place[] } }>) {
+  
+    this.cities$ = this.store.select((state) => state.city.cities);
+  
   }
 
   public city: FormControl = new FormControl('', [Validators.required]);
   public cityAdress: string = '';
-  // cities$! : Observable<Place[]> ;
+ 
   public cities : Place[] = [];
   @ViewChild('cityAdress') elRef!:ElementRef;
 
@@ -31,17 +36,28 @@ export class SearchComponent implements OnInit {
   //restaurants$! : Observable<Place[]> ;
   public restaurants : Place[] = [];
   public macDonalds : Place[] = [];
+ 
+  //  NGRX
+  public cities$! : Observable<Place[]> ;
 
 
  
 
   ngOnInit(): void {
-    this.city.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((value) => {
-        this.recupererVille(value);
-      });
+    // this.city.valueChanges
+    //   .pipe(debounceTime(500))
+    //   .subscribe((value) => {
+    //     this.recupererVille(value);
+    //   });
 
+    this.cities$ = this.store.select((state) => state.city.cities);
+
+    this.city.valueChanges.subscribe((value) => {
+      if (value) {
+        this.store.dispatch(CityActions.loadCities({ cityName: value }));
+      }
+    });
+  
   }
 
   recupererVille(query: string): void {

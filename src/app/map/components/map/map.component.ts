@@ -4,7 +4,6 @@ import { Place } from '../../../core/models/place';
 import { RestaurantService } from '../../../core/services/restaurant.service';
 import { Store } from '@ngrx/store';
 //import { AppState } from './../../../store/app.state';
-//import * as RestaurantActions from './../../../store/restaurant/restaurant.actions';
 import { selectRestaurant } from './../../../store/restaurant/restaurant.actions';
 
 @Component({
@@ -21,8 +20,6 @@ export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
   @Input() receivedObject: any;
 
   //@Output() restaurantSelected = new EventEmitter<string>();
-
-
 
   map: any; // Référence à la carte
   cityName: string = 'Paris';  // Ville par défaut
@@ -66,10 +63,47 @@ export class MapComponent  implements OnInit, OnChanges, AfterViewInit {
   
 
   initMap(): void {
-    this.map = L.map('map').setView([this.lat, this.lon], 13); // Centrer la carte par défaut
+    // this.map = L.map('map').setView([this.lat, this.lon], 13); // Centrer la carte par défaut
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; OpenStreetMap contributors'
+    // }).addTo(this.map);
+    // Initialiser la carte sans coordonnées par défaut
+    this.map = L.map('map');
+
+    // Ajouter la couche de tuiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+      attribution: 'Map data © <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
+
+    // Demander la position de l'utilisateur et centrer la carte automatiquement
+    this.map.locate({ setView: true, maxZoom: 16, enableHighAccuracy: true });
+
+    // Lorsque la localisation est trouvée
+    this.map.on('locationfound', (e: L.LocationEvent) => {
+      const radius = e.accuracy / 2;
+
+      // Ajouter un marqueur à la position actuelle
+      L.marker(e.latlng,
+        {
+          icon: L.icon({
+            iconSize: [25, 41],
+            iconAnchor: [13, 41],
+            iconUrl: './assets/marker-icon.png',
+            shadowUrl: './assets/marker-shadow.png',
+          }),
+        }
+      ).addTo(this.map)
+        //.bindPopup(`Vous êtes à ${radius.toFixed(0)} mètres de ce point.`)
+        .openPopup();
+
+      // Ajouter un cercle de précision autour de la position
+     // L.circle(e.latlng, radius).addTo(this.map);
+    });
+
+    // Gérer les erreurs de localisation
+    this.map.on('locationerror', (e: L.ErrorEvent) => {
+      alert(`Erreur de localisation : ${e.message}`);
+    });
   }
 
   updateMap(cityName: string): void {

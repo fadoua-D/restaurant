@@ -15,11 +15,6 @@ export const loadRestaurantsFailure = createAction(
   props<{ error: string }>() // Action qui reçoit l'erreur si elle se produit
 );
 
-// export const selectRestaurant = createAction(
-//   '[Restaurant] Select Restaurant',
-//   props<{ restaurant: any }>()
-// );
-
 export const selectRestaurant = createAction(
   '[Restaurant] Select Restaurant',
   props<{ restaurant: string }>()

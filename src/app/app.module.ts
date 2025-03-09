@@ -13,6 +13,10 @@ import { AppRoutingModule } from './app-routing.module';  // Import du module de
 import { StoreModule } from '@ngrx/store';
 import { restaurantReducer } from './store/restaurant/restaurant.reducer';
 
+import { Actions, EffectsModule } from '@ngrx/effects';
+import { cityReducer } from './store/city/city.reducer';
+import { CityEffects } from './store/city/city.effects';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -23,12 +27,15 @@ import { restaurantReducer } from './store/restaurant/restaurant.reducer';
     HomeModule,
     AppRoutingModule,
     StoreModule.forRoot({
-      restaurant: restaurantReducer
-    }),
+      restaurant: restaurantReducer,
+      city: cityReducer 
+    },
+  ),
+    EffectsModule.forRoot([CityEffects]),
   //  EffectsModule.forRoot([RestaurantEffects]),
   //  EffectsModule.forFeature([RestaurantEffects]),
   ],
-  providers: [ ApiService, RestaurantService ],
+  providers: [ ApiService, RestaurantService, Actions ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
